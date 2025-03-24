@@ -4,14 +4,14 @@ import pyautogui
 import random
 
 # WhatsApp Desktop path (update if needed)
-whatsapp_path = "<YOUR_WHATSAPP_PATH>"
+whatsapp_path = r"C:\Program Files\WindowsApps\5319275A.WhatsAppDesktop_2.2509.4.0_x64__cv1g1gvanyjgm\WhatsApp.exe"
 
 # Contact details
-contact_name = "<CONTACT_NAME>"  # Searching by name
+contact_name = "Hooyo"  # Searching by name
 
 # List of messages
 messages = [
-    f"Hey {contact_name}! Hope you're having a great day! 😊",
+    "Hey Hooyo! Hope you're having a great day! 😊",
     "Remember to stay focused and keep pushing forward! 💪",
     "Just a reminder: Success is built on consistency! 🚀",
     "Take a deep breath, relax, and keep going! 🌿",
@@ -23,7 +23,7 @@ def open_whatsapp():
     """Opens WhatsApp Desktop"""
     print(f"📩 Opening WhatsApp Desktop...")
     os.startfile(whatsapp_path)  
-    time.sleep(10)  # Wait for WhatsApp to open
+    time.sleep(10)  # Wait for WhatsApp to open fully
 
 def send_message():
     """Sends a random message via WhatsApp Desktop"""
@@ -31,33 +31,31 @@ def send_message():
         message = random.choice(messages)
         print(f"📩 Sending message to {contact_name}: {message}")
 
-        # Ensure WhatsApp is in focus
-        pyautogui.hotkey("alt", "tab")  # Switch to WhatsApp
-        time.sleep(2)
-
         # Open the search bar
         pyautogui.hotkey("ctrl", "f")
-        time.sleep(2)
+        time.sleep(1)
 
         # Type the contact name and press Enter
-        pyautogui.write(contact_name)
-        time.sleep(2)
+        pyautogui.write(contact_name, interval=0.1)  # Adds slight delay to avoid typos
+        time.sleep(1)
         pyautogui.press("enter")
         time.sleep(3)  # Wait for chat to load
 
-        # Force-click the chat area to remove focus from search
-        pyautogui.click(x=300, y=300)  # Adjust coordinates if needed
-        time.sleep(2)
+        # Check if the contact name is correct
+        pyautogui.screenshot("whatsapp_screen.png")  # Debugging step
+        time.sleep(1)
 
-        # Click the message input box (adjust coordinates if needed)
+        # Click the chat area (adjust coordinates if needed)
+        pyautogui.click(x=300, y=300)
+        time.sleep(1)
+
+        # Click the message input box (adjust coordinates based on screen resolution)
         pyautogui.click(x=600, y=900)  
-        time.sleep(2)
+        time.sleep(1)
 
-        # Type the message
-        pyautogui.write(message)
-        time.sleep(2)
-
-        # Press "Enter" to send
+        # Type and send the message
+        pyautogui.write(message, interval=0.05)  # Adds a natural typing effect
+        time.sleep(1)
         pyautogui.press("enter")
 
         print("✅ Message sent!")
